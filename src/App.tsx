@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
+import Button, { ButtonType, ButtonSize } from "./components/Button/index";
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Button className="test" btnType={ButtonType.Default} disabled>
+        你好
+      </Button>
+      <Button autoFocus>自动获取焦点</Button>
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+          console.log(e);
+        }}
+        btnType={ButtonType.Primary}
+      >
+        点击事件
+      </Button>
+      <Button className="test" btnType={ButtonType.Default}>
+        你好
+      </Button>
+      <Button btnType={ButtonType.Primary} size={ButtonSize.Large}>
+        你好
+      </Button>
+      <Button btnType={ButtonType.Danger} size={ButtonSize.Small}>
+        你好
+      </Button>
+      <Button
+        btnType={ButtonType.Link}
+        href="https://www.baidu.com"
+        target="_black"
+        size={ButtonSize.Large}
+      >
+        你好
+      </Button>
+      <Button
+        btnType={ButtonType.Link}
+        href="sajdajshdash"
+        size={ButtonSize.Large}
+        disabled
+      >
+        你好
+      </Button>
     </div>
   );
-}
+};
 
 export default App;
