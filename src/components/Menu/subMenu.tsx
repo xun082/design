@@ -3,6 +3,11 @@ import React, { useContext, useState, FunctionComponentElement } from "react";
 import classNames from "classnames";
 import { MenuContext } from ".";
 import { MenuItemProps } from "./menu-item";
+import Icon from "../Icon";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+library.add(fas);
 
 export interface SubMenuProps {
   index?: string;
@@ -61,6 +66,8 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
 
   const classes = classNames("menu-item submenu-item", className, {
     "is-active": context.index === index,
+    "is-opened": menuOpen,
+    "is-vertical": context.mode === "vertical",
   });
 
   const renderChildren = () => {
@@ -87,6 +94,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
     <li key={index} className={classes} {...hoverEvents}>
       <div className="submenu-title" {...clickEvents}>
         {title}
+        <Icon icon="angle-down" className="arrow-icon" />
       </div>
       {renderChildren()}
     </li>

@@ -4,10 +4,17 @@ import Button, { ButtonType, ButtonSize } from "./components/Button";
 import Menu from "./components/Menu";
 import MenuItem from "./components/Menu/menu-item";
 import SubMenu from "./components/Menu/subMenu";
+import Icon from "./components/Icon";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+library.add(fas);
 
 const App: React.FC = () => {
   return (
     <div>
+      <Icon icon="arrow-down" theme="danger" size="10x" />
+      <Icon icon="arrow-down" theme="primary" size="10x" />
       {/* 菜单 */}
       <Menu
         defaultIndex={"0"}
