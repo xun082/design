@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { MenuContext } from ".";
 import { MenuItemProps } from "./menu-item";
 import Icon from "../Icon";
+import Transition from "../Transition";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -87,7 +88,11 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
         );
       }
     });
-    return <ul className={subMenuClass}>{childrenComponent}</ul>;
+    return (
+      <Transition in={menuOpen} timeout={300} animation="zoom-in-bottom">
+        <ul className={subMenuClass}>{childrenComponent}</ul>
+      </Transition>
+    );
   };
 
   return (
