@@ -6,6 +6,7 @@ import MenuItem from "./components/Menu/menu-item";
 import SubMenu from "./components/Menu/subMenu";
 import Icon from "./components/Icon";
 import Transition from "./components/Transition";
+import Upload from "./components/Upload";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -13,8 +14,20 @@ library.add(fas);
 
 const App: React.FC = () => {
   const [show, setShow] = useState(false);
+  // const [state, setState] = useState<string>("");
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://run.mocky.io/v3/6871f2c4-f446-4e55-9f37-21fa01952e4c")
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setState(res.data.test);
+  //     });
+  // });
   return (
     <div>
+      {/* 文件 */}
+      <Upload action="https://jsonplaceholder.typicode.com/posts" />
       {/* 动画 */}
       <div>
         <Button
