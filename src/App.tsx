@@ -27,7 +27,17 @@ const App: React.FC = () => {
   return (
     <div>
       {/* 文件 */}
-      <Upload action="https://jsonplaceholder.typicode.com/posts" />
+      <Upload
+        action="https://jsonplaceholder.typicode.com/posts"
+        name="xun"
+        data={{ key: "value" }}
+        headers={{ "xxxxxxx-by": "xun" }}
+        accept=".jpg"
+        multiple
+      />
+      <br />
+      <br />
+      <br />
       {/* 动画 */}
       <div>
         <Button

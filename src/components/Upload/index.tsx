@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, Children } from "react";
 
 import Button from "../Button";
+import UploadList from "./uploadList";
 import axios from "axios";
 
 export type UploadFileStatus = "ready" | "uploading" | "success" | "error";
@@ -14,6 +15,12 @@ export interface UploadProps {
   onSuccess?: (data: any, file: File) => void;
   onError?: (err: any, file: File) => void;
   onRemove?: (file: UploadFile) => void;
+  headers?: { [key: string]: any };
+  name?: string;
+  data?: { [key: string]: any };
+  withCredentials?: boolean;
+  accept?: string;
+  multiple?: boolean;
 }
 
 export interface UploadFile {
@@ -37,11 +44,17 @@ const Upload: React.FC<UploadProps> = (props) => {
     onChange,
     defaultFileList,
     onRemove,
+    name = "file",
+    headers,
+    data,
+    withCredentials,
+    multiple,
+    accept,
   } = props;
 
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || []);
 
   const updateFileList = (
     updateFile: UploadFile,
@@ -74,6 +87,11 @@ const Upload: React.FC<UploadProps> = (props) => {
     }
   };
 
+  const handleRemove = (file: UploadFile) => {
+    setFileList((prevList) => prevList.filter((item) => item.uid !== file.uid));
+    if (onRemove) onRemove(file);
+  };
+
   const uploadFiles = (files: FileList) => {
     const postFiles = Array.from(files);
 
@@ -102,14 +120,23 @@ const Upload: React.FC<UploadProps> = (props) => {
       percent: 0,
       raw: file,
     };
-    setFileList([_file, ...fileList]);
+    setFileList((prevList) => [_file, ...prevList]);
     const formData = new FormData();
-    formData.append(file.name, file);
+    formData.append(name, file);
+
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+    }
+
     axios
       .post(action, formData, {
         headers: {
+          ...headers,
           "Content-Type": "multipart/form-data",
         },
+        withCredentials,
         onUploadProgress: (e) => {
           const percentage = Math.round((e.loaded * 100) / e.total) || 0;
 
@@ -151,7 +178,10 @@ const Upload: React.FC<UploadProps> = (props) => {
         style={{ display: "none" }}
         ref={fileInput}
         onChange={handleFileChange}
+        multiple={multiple}
+        accept={accept}
       />
+      <UploadList fileList={fileList} onRemove={handleRemove} />
     </div>
   );
 };
